@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PlanetPulse — Your daily carbon footprint</title>
+<meta name="description" content="Turn your daily travel, food, and electricity choices into a visible carbon footprint." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="grain"></div>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 28 28" width="22" height="22">
+            <circle cx="14" cy="14" r="12.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M4 14 H10 L12.5 7 L16 21 L18.5 14 H24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        PlanetPulse
+      </div>
+      <nav class="topnav">
+        <a href="#log">Log</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#trend">Trend</a>
+        <a href="#tips">Tips</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero wrap">
+      <div class="hero-text">
+        <h1>Every choice<br>leaves a pulse.</h1>
+        <p class="hero-sub">Log your travel, food, and electricity — watch your carbon footprint take shape, day by day, in kilograms of CO₂e.</p>
+      </div>
+      <div class="hero-pulse">
+        <div class="pulse-figure">
+          <span class="pulse-number" id="todayTotal">0.0</span>
+          <span class="pulse-unit">kg CO₂e today</span>
+        </div>
+        <svg class="pulse-line" id="heroPulseSvg" viewBox="0 0 400 90" preserveAspectRatio="none" aria-hidden="true">
+          <polyline id="heroPulsePath" points="0,45 400,45" fill="none" />
+        </svg>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- LOG ENTRY -->
+    <section id="log" class="section wrap">
+      <div class="section-head">
+        <h2>Log today's choices</h2>
+        <p class="section-sub">Three categories. Add as many entries as your day actually had.</p>
+      </div>
+
+      <div class="log-panel">
+        <div class="log-tabs" role="tablist" aria-label="Entry category">
+          <button class="log-tab is-active" data-type="travel" role="tab" aria-selected="true">Travel</button>
+          <button class="log-tab" data-type="food" role="tab" aria-selected="false">Food</button>
+          <button class="log-tab" data-type="electricity" role="tab" aria-selected="false">Electricity</button>
+        </div>
+
+        <form id="logForm" class="log-form">
+
+          <div class="log-fields" data-panel="travel">
+            <label class="field">
+              <span>Mode</span>
+              <select name="mode" id="travelMode">
+                <option value="car">Car (petrol)</option>
+                <option value="bus">Bus</option>
+                <option value="train">Train / metro</option>
+                <option value="flight">Flight (short-haul)</option>
+                <option value="bike">Bike / walk</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Distance (km)</span>
+              <input type="number" name="distance" min="0" step="0.1" placeholder="e.g. 12" />
+            </label>
+          </div>
+
+          <div class="log-fields" data-panel="food" hidden>
+            <label class="field">
+              <span>Meal type</span>
+              <select name="foodType">
+                <option value="beef">Beef / red meat</option>
+                <option value="poultry">Chicken / fish / eggs</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Servings</span>
+              <input type="number" name="servings" min="0" step="1" value="1" />
+            </label>
+          </div>
+
+          <div class="log-fields" data-panel="electricity" hidden>
+            <label class="field">
+              <span>Electricity used (kWh)</span>
+              <input type="number" name="kwh" min="0" step="0.1" placeholder="e.g. 4.5" />
+            </label>
+            <p class="field-note">Default grid factor: 0.42 kg CO₂e / kWh — see README for why.</p>
+          </div>
+
+          <button type="submit" class="btn-primary">Add entry</button>
+        </form>
+      </div>
+
+      <div class="entries-list" id="entriesList" aria-live="polite">
+        <p class="empty-state">No entries yet today. Add your first one above — an empty log is just a day not yet lived.</p>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="section wrap">
+      <div class="section-head">
+        <h2>Today's breakdown</h2>
+        <p class="section-sub">Where your footprint is actually coming from.</p>
+      </div>
+
+      <div class="breakdown" id="breakdown">
+        <div class="breakdown-row" data-cat="travel">
+          <span class="breakdown-label">Travel</span>
+          <div class="breakdown-track"><div class="breakdown-fill" data-fill="travel"></div></div>
+          <span class="breakdown-value" data-value="travel">0.0 kg</span>
+        </div>
+        <div class="breakdown-row" data-cat="food">
+          <span class="breakdown-label">Food</span>
+          <div class="breakdown-track"><div class="breakdown-fill" data-fill="food"></div></div>
+          <span class="breakdown-value" data-value="food">0.0 kg</span>
+        </div>
+        <div class="breakdown-row" data-cat="electricity">
+          <span class="breakdown-label">Electricity</span>
+          <div class="breakdown-track"><div class="breakdown-fill" data-fill="electricity"></div></div>
+          <span class="breakdown-value" data-value="electricity">0.0 kg</span>
+        </div>
+      </div>
+
+      <div class="goal-panel">
+        <div class="goal-head">
+          <h3>Daily target</h3>
+          <label class="goal-input">
+            <span>kg CO₂e / day</span>
+            <input type="number" id="goalInput" min="0" step="0.5" value="10" />
+          </label>
+        </div>
+        <div class="goal-track"><div class="goal-fill" id="goalFill"></div></div>
+        <p class="goal-status" id="goalStatus">Log something to see how today compares.</p>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- TREND -->
+    <section id="trend" class="section wrap">
+      <div class="section-head">
+        <h2>Your pulse over time</h2>
+        <p class="section-sub">Last 7 days of logged footprint.</p>
+      </div>
+      <div class="trend-panel">
+        <svg id="trendSvg" viewBox="0 0 700 220" preserveAspectRatio="none" aria-label="7 day carbon footprint trend">
+          <line x1="0" y1="180" x2="700" y2="180" class="trend-baseline" />
+          <polyline id="trendPath" points="" fill="none" />
+          <g id="trendDots"></g>
+        </svg>
+        <div class="trend-labels" id="trendLabels"></div>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <!-- TIPS -->
+    <section id="tips" class="section wrap">
+      <div class="section-head">
+        <h2>What would move the needle</h2>
+        <p class="section-sub">Based on your highest-emitting category today.</p>
+      </div>
+      <div id="tipsList" class="tips-list">
+        <p class="empty-state">Tips appear once you've logged something today.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>PlanetPulse — built for Code2Career AI Hackathon</span>
+      <button id="resetBtn" class="btn-ghost">Clear all data</button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
