@@ -8,7 +8,7 @@ PlanetPulse turns your daily travel, food, and electricity choices into a visibl
 
 ## Live demo
 
-- **Live URL:** https://github.com/Avanish-web/Planet-pulse-.git
+- **Live URL:** https://avanish-web.github.io/Planet-pulse-/
 - **Repo:** https://github.com/Avanish-web/Planet-pulse-
 
 ## Features
