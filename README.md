@@ -2,7 +2,7 @@
 
 **Hackathon ID:** AZIS-7SJVZT
 
-Track 2 · Climate Tech brief · Code2Career AI Hackathon
+Track 2 · planet pulse  · Code2Career AI Hackathon
 
 PlanetPulse turns your daily travel, food, and electricity choices into a visible personal carbon footprint. Log entries throughout the day, see a live breakdown, track a 7-day trend, and get suggestions targeted at whichever category is driving your footprint.
 
