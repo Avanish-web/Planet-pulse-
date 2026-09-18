@@ -1,6 +1,6 @@
 # PlanetPulse
 
-**Hackathon ID:** `PUT-YOUR-HACKATHON-ID-HERE` ⚠️ *(replace this before you submit — a missing or wrong ID disqualifies you)*
+**Hackathon ID:** AZIS-7SJVZT
 
 Track 2 · Climate Tech brief · Code2Career AI Hackathon
 
@@ -8,8 +8,8 @@ PlanetPulse turns your daily travel, food, and electricity choices into a visibl
 
 ## Live demo
 
-- **Live URL:** _add your deployed link here_
-- **Repo:** _add your GitHub repo link here_
+- **Live URL:** https://github.com/Avanish-web/Planet-pulse-.git
+- **Repo:** https://github.com/Avanish-web/Planet-pulse-
 
 ## Features
 
